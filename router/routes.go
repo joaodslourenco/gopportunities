@@ -1,9 +1,10 @@
 package router
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/joaodslourenco/gopportunities/handler"
 )
 
 func generateEndpoint(method, endpoint string) string {
@@ -11,40 +12,9 @@ func generateEndpoint(method, endpoint string) string {
 }
 
 func initializeRoutes(router *http.ServeMux) {
-
-	router.HandleFunc(generateEndpoint(http.MethodGet, "/opening"), func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", jsonContentType)
-		json.NewEncoder(w).Encode(JSONTest{
-			Message: "GET opening",
-		})
-	})
-
-	router.HandleFunc(generateEndpoint(http.MethodPost, "/opening"), func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", jsonContentType)
-		json.NewEncoder(w).Encode(JSONTest{
-			Message: "POST opening",
-		})
-	})
-
-	router.HandleFunc(generateEndpoint(http.MethodDelete, "/opening"), func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", jsonContentType)
-		json.NewEncoder(w).Encode(JSONTest{
-			Message: "DELETE opening",
-		})
-	})
-
-	router.HandleFunc(generateEndpoint(http.MethodPut, "/opening"), func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", jsonContentType)
-		json.NewEncoder(w).Encode(JSONTest{
-			Message: "PUT opening",
-		})
-	})
-
-	router.HandleFunc(generateEndpoint(http.MethodGet, "/openings"), func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", jsonContentType)
-		json.NewEncoder(w).Encode(JSONTest{
-			Message: "GET openings",
-		})
-	})
-
+	router.HandleFunc(generateEndpoint(http.MethodGet, "/opening"), handler.GetOpening)
+	router.HandleFunc(generateEndpoint(http.MethodPost, "/opening"), handler.CreateOpening)
+	router.HandleFunc(generateEndpoint(http.MethodDelete, "/opening"), handler.DeleteOpening)
+	router.HandleFunc(generateEndpoint(http.MethodPut, "/opening"), handler.UpdateOpening)
+	router.HandleFunc(generateEndpoint(http.MethodGet, "/openings"), handler.GetAllOpenings)
 }
